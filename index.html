@@ -1,84 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MLBB Gaming Zone</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d1b"><title>MLBB Gaming Zone</title>
 <style>
-body{margin:0;background:#080d1b;color:white;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 10px;background:#142442;border-bottom:3px solid #00e5ff}
-h1{color:#00e5ff}
-nav{text-align:center;padding:12px}
-button{background:#00d9ff;color:#06101c;border:0;border-radius:8px;padding:12px;margin:5px;font-weight:bold}
-main{padding:15px;max-width:700px;margin:auto}
-.card{background:#172644;margin:14px 0;padding:18px;border-radius:14px}
-input{width:90%;padding:12px;border-radius:8px}
-.hero{display:inline-block;background:#23375c;padding:12px;margin:5px;border-radius:8px}
-.hidden{display:none}
-footer{text-align:center;padding:20px}
+:root{--bg:#080d1b;--panel:#142442;--card:#172644;--accent:#00e5ff;--muted:#b8c4d8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}header{text-align:center;padding:22px 12px;background:linear-gradient(135deg,#142442,#10192d);border-bottom:3px solid var(--accent)}h1{color:var(--accent);margin:5px}nav{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;padding:10px;position:sticky;top:0;background:#080d1bf5;z-index:5}button{background:var(--accent);color:#06101c;border:0;border-radius:9px;padding:11px 12px;margin:3px;font-weight:bold;cursor:pointer}button.secondary{background:#263957;color:#fff}main{padding:12px;max-width:1000px;margin:auto}.card{background:var(--card);margin:12px 0;padding:16px;border-radius:14px;border:1px solid #2a3b5b}input,select{width:100%;padding:12px;border-radius:9px;border:1px solid #3a4d70;background:#0b1426;color:white;margin:7px 0}.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hero-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:9px}.hero{min-width:0;background:#203454;border:1px solid #31496d;border-radius:12px;padding:7px;color:white;cursor:pointer;text-align:center;margin:0}.hero img{width:100%;height:105px;object-fit:cover;border-radius:8px;background:#0b1426}.hero .name{font-size:13px;font-weight:bold;display:block;padding:7px 1px 3px;overflow-wrap:anywhere}.hero small{color:#c6d3e8}.hero.fav{border:2px solid #ffd54a}.hidden{display:none!important}.pill{display:inline-block;padding:5px 8px;background:#263957;border-radius:20px;margin:3px;font-size:12px}.muted,.status{color:var(--muted);font-size:13px}.detail-title{display:flex;align-items:center;gap:12px}.detail-title img{width:90px;height:100px;object-fit:cover;border-radius:10px;background:#0b1426}.section-title{color:var(--accent)}footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}@media(max-width:480px){.toolbar{grid-template-columns:1fr}.hero-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero img{height:90px}}
 </style>
 </head>
 <body>
-<header>
-<h1>MLBB GAMING ZONE</h1>
-<p>WELCOME, WARRIORS!</p>
-</header>
-<nav>
-<button onclick="show('home')">Home</button>
-<button onclick="show('heroes')">Hero Builds</button>
-</nav>
+<header><h1>MLBB GAMING ZONE</h1><p>WELCOME, WARRIORS!</p><div class="status" id="status">Loading heroes…</div></header>
+<nav><button onclick="showPage('home')">Home</button><button onclick="showPage('heroes')">All Heroes</button><button onclick="showPage('favorites')">⭐ My Favorites <span id="favCount">0</span></button></nav>
 <main>
-<section id="home">
-<div class="card">
-<h2>Welcome to MLBB Gaming Zone</h2>
-<p>Explore heroes, skills and suggested builds.</p>
-<button onclick="show('heroes')">Explore MLBB</button>
-</div>
-<div class="card">
-<h2>My Gameplay</h2>
-<a href="https://youtube.com/" style="color:#00e5ff">Watch YouTube Videos</a>
-</div>
-<div class="card">
-<h2>Follow Me</h2>
-<a href="https://tiktok.com/" style="color:#00e5ff">My TikTok</a>
-</div>
-</section>
-<section id="heroes" class="hidden">
-<div class="card">
-<h2>Hero Build Guide</h2>
-<input id="search" placeholder="Search hero..." oninput="filterHeroes()">
-<div id="heroList">
-<div class="hero" data-name="alucard" onclick="details('Alucard','Fighter / Assassin','Warrior Boots, Hunter Strike, Blade of Despair','Assassin emblem ကို စမ်းသုံးပါ။')">Alucard</div>
-<div class="hero" data-name="layla" onclick="details('Layla','Marksman','Swift Boots, Berserker Fury, Haas Claws','Marksman emblem ကို စမ်းသုံးပါ။')">Layla</div>
-<div class="hero" data-name="chou" onclick="details('Chou','Fighter','Tough Boots, Hunter Strike, Malefic Roar','Fighter သို့မဟုတ် Assassin emblem ကို စမ်းသုံးပါ။')">Chou</div>
-<div class="hero" data-name="xavier" onclick="details('Xavier','Mage','Arcane Boots, Lightning Truncheon, Holy Crystal','Mage emblem ကို စမ်းသုံးပါ။')">Xavier</div>
-<div class="hero" data-name="badang" onclick="details('Badang','Fighter','Warrior Boots, Golden Staff, Corrosion Scythe','Fighter emblem ကို စမ်းသုံးပါ။')">Badang</div>
-<div class="hero" data-name="franco" onclick="details('Franco','Tank / Support','Tough Boots, Dominance Ice, Athena Shield','Tank emblem ကို စမ်းသုံးပါ။')">Franco</div>
-</div>
-</div>
-<div id="detail" class="card hidden"></div>
-<button onclick="show('home')">Back Home</button>
-</section>
-</main>
-<footer>Fan-made website. Not affiliated with MOONTON.</footer>
+<section id="home"><div class="card"><h2>Welcome to MLBB Gaming Zone</h2><p>Search heroes, save favorites, and view build, emblem, battle spell and skill-combo suggestions.</p><button onclick="showPage('heroes')">Choose a Hero</button></div><div class="card"><h3>Hero updates</h3><p id="apiNote">The page will try to load hero data from a public API. If the API is unavailable, it uses the built-in roster. Automatic updates depend on the external API being available and current.</p></div><div class="card"><h3>My Gameplay</h3><a href="https://youtube.com/" style="color:#00e5ff">Watch YouTube Videos</a><br><a href="https://tiktok.com/" style="color:#00e5ff">My TikTok</a></div></section>
+<section id="heroes" class="hidden"><div class="card"><h2 class="section-title">Choose Your Hero</h2><div class="toolbar"><input id="search" placeholder="Search hero name…" oninput="renderHeroes()"><select id="roleFilter" onchange="renderHeroes()"><option value="">All roles</option><option>Tank</option><option>Fighter</option><option>Assassin</option><option>Mage</option><option>Marksman</option><option>Support</option></select></div><div id="heroList" class="hero-grid"></div><p id="heroCount" class="status"></p></div><div id="detail" class="card hidden"></div></section>
+<section id="favorites" class="hidden"><div class="card"><h2 class="section-title">⭐ My Favorites</h2><p class="muted">Favorites are saved on this device/browser.</p><div id="favoriteList" class="hero-grid"></div><p id="emptyFav" class="muted">No favorites yet. Open All Heroes and choose a hero.</p></div></section>
+</main><footer>Fan-made website. Not affiliated with MOONTON. Builds are general suggestions; check the current patch.</footer>
 <script>
-function show(id){
-document.getElementById('home').classList.toggle('hidden',id!=='home');
-document.getElementById('heroes').classList.toggle('hidden',id!=='heroes');
-document.getElementById('detail').classList.add('hidden');
-}
-function details(name,role,build,emblem){
-let d=document.getElementById('detail');
-d.innerHTML='<h2>'+name+'</h2><p><b>Role:</b> '+role+'</p><p><b>Suggested items:</b> '+build+'</p><p><b>Emblem:</b> '+emblem+'</p><p>Build သည် အကြံပြုချက်သာဖြစ်ပြီး ပွဲအခြေအနေအလိုက် ပြောင်းနိုင်သည်။</p>';
-d.classList.remove('hidden');
-}
-function filterHeroes(){
-let q=document.getElementById('search').value.toLowerCase();
-document.querySelectorAll('.hero').forEach(h=>{
-h.style.display=h.dataset.name.includes(q)?'inline-block':'none';
-});
-}
-</script>
-</body>
-</html>
+const fallbackNames = [
+"Aamon","Akai","Aldous","Alice","Alpha","Alucard","Angela","Argus","Arlott","Aulus","Aurora","Badang","Balmond","Bane","Barats","Baxia","Beatrix","Belerick","Benedetta","Brody","Bruno","Carmilla","Cecilion","Chang'e","Chip","Chou","Cici","Claude","Clint","Cyclops","Diggie","Dyrroth","Edith","Esmeralda","Estes","Eudora","Fanny","Faramis","Floryn","Franco","Fredrinn","Freya","Gatotkaca","Gloo","Gord","Granger","Grock","Guinevere","Gusion","Hanabi","Hanzo","Harith","Harley","Hayabusa","Helcurt","Hilda","Hylos","Irithel","Ixia","Jawhead","Johnson","Joy","Julian","Kadita","Kagura","Kaja","Kalea","Karina","Karrie","Khaleed","Khufra","Kimmy","Lancelot","Lapu-Lapu","Layla","Leomord","Lesley","Ling","Lolita","Lukas","Lunox","Luo Yi","Lylia","Marcel","Martis","Masha","Mathilda","Melissa","Minotaur","Minsitthar","Miya","Moskov","Nana","Natalia","Natan","Novaria","Obsidia","Odette","Paquito","Pharsa","Phoveus","Popol and Kupa","Rafaela","Roger","Ruby","Saber","Selena","Silvanna","Sun","Suyou","Terizla","Thamuz","Tigreal","Uranus","Vale","Valentina","Valir","Vexana","Wanwan","Xavier","X.Borg","Yin","Yu Zhong","Yve","Zetian","Zhask","Zilong"
+];
+const roles={
+Tank:["Akai","Baxia","Belerick","Edith","Franco","Gatotkaca","Gloo","Grock","Hylos","Johnson","Khufra","Lolita","Minotaur","Tigreal","Uranus","Chip","Barats"],
+Fighter:["Aldous","Alpha","Alucard","Arlott","Aulus","Badang","Balmond","Bane","Cici","Dyrroth","Freya","Fredrinn","Guinevere","Jawhead","Julian","Khaleed","Lapu-Lapu","Leomord","Martis","Masha","Minsitthar","Paquito","Phoveus","Ruby","Silvanna","Sun","Suyou","Terizla","Thamuz","X.Borg","Yin","Yu Zhong","Zilong","Lukas","Kalea"],
+Assassin:["Aamon","Benedetta","Fanny","Gusion","Hanzo","Hayabusa","Helcurt","Joy","Karina","Lancelot","Ling","Natalia","Saber","Selena"],
+Mage:["Alice","Aurora","Cecilion","Chang'e","Cyclops","Eudora","Gord","Harith","Harley","Kadita","Kagura","Kimmy","Lunox","Luo Yi","Lylia","Novaria","Odette","Pharsa","Valentina","Vale","Valir","Vexana","Xavier","Yve","Zhask","Zetian"],
+Marksman:["Beatrix","Brody","Bruno","Claude","Clint","Granger","Hanabi","Irithel","Ixia","Karrie","Layla","Lesley","Melissa","Miya","Moskov","Natan","Popol and Kupa","Roger","Wanwan","Obsidia"],
+Support:["Angela","Carmilla","Diggie","Estes","Faramis","Floryn","Mathilda","Rafaela"]
+};
+let heroes=[], selectedId=null, apiOnline=false;
+const favKey='mlbb-gaming-zone-favorites-v2';
+function guessRole(name){for(const [role,list] of Object.entries(roles)){if(list.includes(name))return role;}return "Fighter";}
+function slug(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function normalize(h){if(typeof h==="string")return {name:h,role:guessRole(h),id:slug(h)};const name=h.name||h.hero_name||h.heroName||h.localized_name||h.title||h.label;if(!name)return null;return {name,role:h.role||h.roles||h.hero_role||h.type||guessRole(name),id:String(h.id||h.hero_id||slug(name)),image:h.image||h.image_url||h.portrait||h.icon||h.avatar||h.hero_image};}
+function getFavs(){try{return JSON.parse(localStorage.getItem(favKey)||"[]")}catch(e){return []}}
+function saveFavs(a){try{localStorage.setItem(favKey,JSON.stringify(a))}catch(e){}document.getElementById("favCount").textContent=a.length}
+function roleName(h){return Array.isArray(h.role)?h.role.join(" / "):String(h.role||guessRole(h.name))}
+function heroCard(h){const fav=getFavs().includes(h.id);return '<button class="hero '+(fav?'fav':'')+'" data-hero-id="'+esc(h.id)+'">'+(h.image?'<img loading="lazy" src="'+esc(h.image)+'" alt="'+esc(h.name)+'">':'<div style="height:75px;display:grid;place-items:center;font-size:30px">⚔️</div>')+'<span class="name">'+esc(h.name)+'</span><small>'+esc(roleName(h))+'</small><span class="pill">'+(fav?'⭐ Saved':'View guide')+'</span></button>'}
+function renderHeroes(){const q=(document.getElementById("search")?.value||"").toLowerCase().trim(),role=document.getElementById("roleFilter")?.value||"";const list=heroes.filter(h=>h.name.toLowerCase().includes(q)&&(!role||roleName(h).toLowerCase().includes(role.toLowerCase())));document.getElementById("heroList").innerHTML=list.map(heroCard).join("")||"<p>No heroes found.</p>";document.getElementById("heroCount").textContent=list.length+" heroes shown · "+heroes.length+" loaded";}
+function renderFavorites(){const list=getFavs().map(id=>heroes.find(h=>h.id===id)).filter(Boolean);document.getElementById("favoriteList").innerHTML=list.map(heroCard).join("");document.getElementById("emptyFav").classList.toggle("hidden",list.length>0);document.getElementById("favCount").textContent=getFavs().length;}
+function showPage(id){["home","heroes","favorites"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));if(id==="heroes")renderHeroes();if(id==="favorites")renderFavorites();window.scrollTo({top:0,behavior:"smooth"});}
+function toggleFav(id){let f=getFavs();f=f.includes(id)?f.filter(x=>x!==id):[...f,id];saveFavs(f);renderHeroes();renderFavorites();if(selectedId===id)openHero(id);}
+function openHero(id){const h=heroes.find(x=>x.id===id);if(!h)return;selectedId=id;const role=roleName(h),fav=getFavs().includes(id);let build,emblem,spell,combo;
+if(role.includes("Marksman")){build="Swift Boots · Haas’s Claws · Berserker’s Fury · Wind of Nature · Malefic Roar";emblem="Marksman Emblem · Swift · Weapon Master · Quantum Charge";spell="Inspire / Flicker";combo="Use crowd control or mobility skill first → Ultimate when enemies are grouped → Basic attacks; reposition with Flicker when needed."}
+else if(role.includes("Mage")){build="Arcane Boots · Genius Wand · Holy Crystal · Divine Glaive · Blood Wings";emblem="Mage Emblem · Rupture · Weapons Master · Lethal Ignition";spell="Flicker / Flameshot";combo="Poke with ranged skill → land control skill → Ultimate → follow with remaining skills from safe range."}
+else if(role.includes("Tank")){build="Tough Boots · Dominance Ice · Athena’s Shield · Antique Cuirass · Immortality";emblem="Tank Emblem · Vitality · Tenacity · Concussive Blast";spell="Flicker / Vengeance";combo="Find a safe engage → crowd-control skill → Ultimate on priority targets → protect teammates and retreat when cooldowns are down."}
+else if(role.includes("Support")){build="Tough Boots · Flask of the Oasis · Oracle · Immortality · situational defense";emblem="Support Emblem · Agility · Pull Yourself Together · Focusing Mark";spell="Flicker / Revitalize";combo="Use support/control skill to help an ally → save Ultimate for a team fight → stay near teammates and protect low-health allies."}
+else if(role.includes("Assassin")){build="Tough Boots · Hunter Strike · Blade of Despair · Malefic Roar · Immortality";emblem="Assassin Emblem · Rupture · Master Assassin · Lethal Ignition";spell="Retribution (Jungle) / Execute";combo="Approach from a flank → use mobility/mark skill → burst with Ultimate → save an escape skill to leave safely."}
+else{build="Tough Boots · War Axe · Hunter Strike · Queen’s Wings · Blade of Despair";emblem="Fighter Emblem · Firmness · Festival of Blood · Brave Smite";spell="Flicker / Vengeance / Execute";combo="Engage with mobility or control skill → chain Skill 1 and Skill 2 → Ultimate when available → keep basic attacks between cooldowns."}
+const d=document.getElementById("detail");d.innerHTML='<div class="detail-title">'+(h.image?'<img src="'+esc(h.image)+'" alt="">':'')+'<div><h2>'+esc(h.name)+'</h2><span class="pill">'+esc(role)+'</span></div></div><button id="toggleFavorite">'+(fav?'★ Remove Favorite':'☆ Add to My Favorites')+'</button><h3 class="section-title">Suggested Build</h3><p>'+esc(build)+'</p><h3 class="section-title">Emblem & Talents</h3><p>'+esc(emblem)+'</p><h3 class="section-title">Battle Spell</h3><p>'+esc(spell)+'</p><h3 class="section-title">Skill Combo Guide</h3><p>'+esc(combo)+'</p><p class="muted">These are general role-based suggestions, not hero-specific or live-patch data. Adjust to the hero’s actual skills, enemy team and current patch.</p><button class="secondary" id="closeDetail">Close Guide</button>';d.classList.remove("hidden");document.getElementById("toggleFavorite").addEventListener("click",()=>toggleFav(id));document.getElementById("closeDetail").addEventListener("click",()=>d.classList.add("hidden"));d.scrollIntoView({behavior:"smooth",block:"start"});}
+async function loadHeroes(){heroes=fallbackNames.map(name=>({name,role:guessRole(name),id:slug(name)}));heroes.sort((a,b)=>a.name.localeCompare(b.name));document.getElementById("status").textContent="Loaded "+heroes.length+" heroes · built-in roster";renderHeroes();renderFavorites();try{const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),5000);const r=await fetch("https://mlbb-stats.ridwaanhall.com/api/hero/list",{signal:controller.signal});clearTimeout(timer);if(r.ok){const j=await r.json();const arr=Array.isArray(j)?j:(j.data||j.heroes||j.results||[]);const remote=arr.map(normalize).filter(Boolean);if(remote.length>50){const seen=new Set(remote.map(h=>h.name.toLowerCase()));heroes=remote;for(const name of fallbackNames){if(!seen.has(name.toLowerCase()))heroes.push({name,role:guessRole(name),id:slug(name)});}apiOnline=true;}}}catch(e){}heroes.sort((a,b)=>a.name.localeCompare(b.name));document.getElementById("status").textContent=apiOnline?"Loaded "+heroes.length+" heroes · public API connected":"Loaded "+heroes.length+" heroes · built-in roster (API unavailable)";document.getElementById("apiNote").textContent=apiOnline?"The public API responded. Future new heroes appear when the API includes them.":"The public API did not respond this time. The built-in hero roster is shown; automatic new-hero updates need a working API.";renderHeroes();renderFavorites();}
+document.getElementById("heroList").addEventListener("click",e=>{const b=e.target.closest("[data-hero-id]");if(b)openHero(b.dataset.heroId);});document.getElementById("favoriteList").addEventListener("click",e=>{const b=e.target.closest("[data-hero-id]");if(b)openHero(b.dataset.heroId);});
+loadHeroes();
+</script></body></html>
