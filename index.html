@@ -6,59 +6,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MLBB Gaming Zone</title>
 <style>
-body {
-  margin: 0;
-  background: #080d1b;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-header {
-  background: #142442;
-  padding: 25px 10px;
-  border-bottom: 3px solid #00e5ff;
-}
-h1 { color: #00e5ff; }
-main { padding: 20px; }
-.card {
-  background: #172644;
-  margin: 18px auto;
-  padding: 22px;
-  border-radius: 14px;
-  max-width: 500px;
-}
-a {
-  display: inline-block;
-  padding: 12px 20px;
-  background: #00d9ff;
-  color: #06101c;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-}
+body{margin:0;background:#080d1b;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 10px;background:#142442;border-bottom:3px solid #00e5ff}
+h1{color:#00e5ff}
+nav{text-align:center;padding:12px}
+button{background:#00d9ff;color:#06101c;border:0;border-radius:8px;padding:12px;margin:5px;font-weight:bold}
+main{padding:15px;max-width:700px;margin:auto}
+.card{background:#172644;margin:14px 0;padding:18px;border-radius:14px}
+input{width:90%;padding:12px;border-radius:8px}
+.hero{display:inline-block;background:#23375c;padding:12px;margin:5px;border-radius:8px}
+.hidden{display:none}
+footer{text-align:center;padding:20px}
 </style>
 </head>
 <body>
 <header>
-  <h1>MLBB GAMING ZONE</h1>
-  <p>WELCOME, WARRIORS!</p>
+<h1>MLBB GAMING ZONE</h1>
+<p>WELCOME, WARRIORS!</p>
 </header>
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('heroes')">Hero Builds</button>
+</nav>
 <main>
-  <div class="card">
-    <h2>Hero Builds</h2>
-    <p>Learn skills, items and emblems.</p>
-    <a href="https://m.mobilelegends.com/">Explore MLBB</a>
-  </div>
-  <div class="card">
-    <h2>My Gameplay</h2>
-    <p>Welcome to my gaming world!</p>
-    <a href="https://youtube.com/">Watch Videos</a>
-  </div>
-  <div class="card">
-    <h2>Follow Me</h2>
-    <a href="https://tiktok.com/">My TikTok</a>
-  </div>
+<section id="home">
+<div class="card">
+<h2>Welcome to MLBB Gaming Zone</h2>
+<p>Explore heroes, skills and suggested builds.</p>
+<button onclick="show('heroes')">Explore MLBB</button>
+</div>
+<div class="card">
+<h2>My Gameplay</h2>
+<a href="https://youtube.com/" style="color:#00e5ff">Watch YouTube Videos</a>
+</div>
+<div class="card">
+<h2>Follow Me</h2>
+<a href="https://tiktok.com/" style="color:#00e5ff">My TikTok</a>
+</div>
+</section>
+<section id="heroes" class="hidden">
+<div class="card">
+<h2>Hero Build Guide</h2>
+<input id="search" placeholder="Search hero..." oninput="filterHeroes()">
+<div id="heroList">
+<div class="hero" data-name="alucard" onclick="details('Alucard','Fighter / Assassin','Warrior Boots, Hunter Strike, Blade of Despair','Assassin emblem ကို စမ်းသုံးပါ။')">Alucard</div>
+<div class="hero" data-name="layla" onclick="details('Layla','Marksman','Swift Boots, Berserker Fury, Haas Claws','Marksman emblem ကို စမ်းသုံးပါ။')">Layla</div>
+<div class="hero" data-name="chou" onclick="details('Chou','Fighter','Tough Boots, Hunter Strike, Malefic Roar','Fighter သို့မဟုတ် Assassin emblem ကို စမ်းသုံးပါ။')">Chou</div>
+<div class="hero" data-name="xavier" onclick="details('Xavier','Mage','Arcane Boots, Lightning Truncheon, Holy Crystal','Mage emblem ကို စမ်းသုံးပါ။')">Xavier</div>
+<div class="hero" data-name="badang" onclick="details('Badang','Fighter','Warrior Boots, Golden Staff, Corrosion Scythe','Fighter emblem ကို စမ်းသုံးပါ။')">Badang</div>
+<div class="hero" data-name="franco" onclick="details('Franco','Tank / Support','Tough Boots, Dominance Ice, Athena Shield','Tank emblem ကို စမ်းသုံးပါ။')">Franco</div>
+</div>
+</div>
+<div id="detail" class="card hidden"></div>
+<button onclick="show('home')">Back Home</button>
+</section>
 </main>
 <footer>Fan-made website. Not affiliated with MOONTON.</footer>
+<script>
+function show(id){
+document.getElementById('home').classList.toggle('hidden',id!=='home');
+document.getElementById('heroes').classList.toggle('hidden',id!=='heroes');
+document.getElementById('detail').classList.add('hidden');
+}
+function details(name,role,build,emblem){
+let d=document.getElementById('detail');
+d.innerHTML='<h2>'+name+'</h2><p><b>Role:</b> '+role+'</p><p><b>Suggested items:</b> '+build+'</p><p><b>Emblem:</b> '+emblem+'</p><p>Build သည် အကြံပြုချက်သာဖြစ်ပြီး ပွဲအခြေအနေအလိုက် ပြောင်းနိုင်သည်။</p>';
+d.classList.remove('hidden');
+}
+function filterHeroes(){
+let q=document.getElementById('search').value.toLowerCase();
+document.querySelectorAll('.hero').forEach(h=>{
+h.style.display=h.dataset.name.includes(q)?'inline-block':'none';
+});
+}
+</script>
 </body>
 </html>
