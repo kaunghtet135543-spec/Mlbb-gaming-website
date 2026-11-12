@@ -12,7 +12,7 @@ textarea{width:100%;min-height:86px;resize:vertical;padding:12px;border-radius:9
 .chat-message{max-width:90%;padding:10px 12px;margin:8px 0;border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
 .chat-message.user{margin-left:auto;background:#12384a;border:1px solid #00a9c5}
 .chat-message.assistant{background:#203454;border:1px solid #31496d}
-.chat-compose{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+.chat-compose{display:grid;grid-template-columns:1fr auto;gap:8px;aoralign-items:end}
 .chat-compose button{min-height:46px}.chat-note{font-size:12px;color:var(--muted)}
 @media(max-width:480px){.chat-compose{grid-template-columns:1fr}.chat-compose button{width:100%}}
 </style>
@@ -28,7 +28,7 @@ textarea{width:100%;min-height:86px;resize:vertical;padding:12px;border-radius:9
 </main><footer>Fan-made website. Not affiliated with MOONTON. Builds are general suggestions; check the current patch.</footer>
 <script>
 const fallbackNames = [
-"Aamon","Akai","Aldous","Alice","Alpha","Alucard","Angela","Argus","Arlott","Aulus","Aurora","Badang","Balmond","Bane","Barats","Baxia","Beatrix","Belerick","Benedetta","Brody","Bruno","Carmilla","Cecilion","Chang'e","Chip","Chou","Cici","Claude","Clint","Cyclops","Diggie","Dyrroth","Edith","Esmeralda","Estes","Eudora","Fanny","Faramis","Floryn","Franco","Fredrinn","Freya","Gatotkaca","Gloo","Gord","Granger","Grock","Guinevere","Gusion","Hanabi","Hanzo","Harith","Harley","Hayabusa","Helcurt","Hilda","Hylos","Irithel","Ixia","Jawhead","Johnson","Joy","Julian","Kadita","Kagura","Kaja","Kalea","Karina","Karrie","Khaleed","Khufra","Kimmy","Lancelot","Lapu-Lapu","Layla","Leomord","Lesley","Ling","Lolita","Lukas","Lunox","Luo Yi","Lylia","Marcel","Martis","Masha","Mathilda","Melissa","Minotaur","Minsitthar","Miya","Moskov","Nana","Natalia","Natan","Novaria","Obsidia","Odette","Paquito","Pharsa","Phoveus","Popol and Kupa","Rafaela","Roger","Ruby","Saber","Selena","Silvanna","Sun","Suyou","Terizla","Thamuz","Tigreal","Uranus","Vale","Valentina","Valir","Vexana","Wanwan","Xavier","X.Borg","Yin","Yu Zhong","Yve","Zetian","Zhask","Zilong"
+"Aamon","Akai","Aldous","Alice","Alpha","Alucard","Angela","Argus","Arlott","Aulus","Aurora","Badang","Balmond","Bane","Barats","Baxia","Beatrix","Belerick","Benedetta","Brody","Bruno","Carmilla","Cecilion","Chang'e","Chip","Chou","Cici","Claude","Clint","Cyclops","Diggie","Dyrroth","Edith","Esmeralda","Estes","Eudora","Fanny","Faramis","Floryn","Franco","Fredrinn","Freya","Gatotkaca","Gloo","Gord","Granger","Grock","Guinevere","Gusion","Hanabi","Hanzo","Harith","Harley","Hayabusa","Helcurt","Hilda","Hylos","Irithel","Ixia","Jawhead","Johnson","Joy","Julian","Kadita","Kagura","Kaja","Kalea","Karina","Karrie","Khaleed","Khufra","Kimmy","Lancelot","Lapu-Lapu","Layla","Leomord","Lesley","Ling","Lolita","Lukas","Lunox","Luo Yi","Lylia","Marcel","Martis","Masha","Mathilda","Melissa","Minotaur","Minsitthar","Miya","Moskov","Nana","Natalia","Natan","Novaria","Obsidia","Odette","Paquito","Pharsa","Phoveus","Popol and Kupa","Rafaela","Roger","Ruby","Saber","Selena","Silvanna","Sun","Suyou","Terizla","Thamuz","Tigreal","Uranus","Vale","Valentina","Valir","Vexana","Wanwan","Xavier","X.Borg","Yin","Yu Zhong","Yve","Zetian","Zhask","Zilong","Sora"
 ];
 const roles={
 Tank:["Akai","Baxia","Belerick","Edith","Franco","Gatotkaca","Gloo","Grock","Hylos","Johnson","Khufra","Lolita","Minotaur","Tigreal","Uranus","Chip","Barats"],
@@ -42,7 +42,7 @@ let heroes=[], selectedId=null, apiOnline=false;
 const favKey='mlbb-gaming-zone-favorites-v2';
 function guessRole(name){for(const [role,list] of Object.entries(roles)){if(list.includes(name))return role;}return "Fighter";}
 function slug(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}t
 function normalize(h){if(typeof h==="string"){const name=h;return {name,role:guessRole(name),id:slug(name),image:heroImage(name)}}const name=h.name||h.name_hero||h.hero_name||h.heroName||h.localized_name||h.title||h.label;if(!name)return null;let image=h.image||h.image_url||h.portrait||h.icon||h.avatar||h.hero_image;const file=h["images-hero"];if(!image&&file&&String(file).startsWith("http"))image=file;if(!image&&file)image="https://raw.githubusercontent.com/Ceplin03/database-mlbb.Mobile-Legends-Bang-Bang/master/images-hero/"+encodeURIComponent(String(file));return {name,role:h.role||h.roles||h.hero_role||h.type||guessRole(name),id:String(h.id||h.hero_id||h.id_hero||slug(name)),image:image||heroImage(name)}}
 function heroImage(name){return "https://raw.githubusercontent.com/Ceplin03/database-mlbb.Mobile-Legends-Bang-Bang/master/images-hero/"+encodeURIComponent(slug(name)+".png")}
 function getFavs(){try{return JSON.parse(localStorage.getItem(favKey)||"[]")}catch(e){return []}}
