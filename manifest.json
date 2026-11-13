@@ -1,0 +1,26 @@
+{
+  "id": "/Mlbb-gaming-website/",
+  "name": "MLBB Gaming Zone",
+  "short_name": "MLBB Zone",
+  "description": "MLBB hero guides, favorites, and AI chat.",
+  "start_url": "/Mlbb-gaming-website/",
+  "scope": "/Mlbb-gaming-website/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080d1b",
+  "theme_color": "#080d1b",
+  "icons": [
+    {
+      "src": "/Mlbb-gaming-website/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Mlbb-gaming-website/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
